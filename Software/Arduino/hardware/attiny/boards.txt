@@ -1,0 +1,9 @@
+attiny85.name=ATtiny85 (internal 1 MHz clock)
+attiny85.bootloader.low_fuses=0x62
+attiny85.bootloader.high_fuses=0xdf
+attiny85.bootloader.extended_fuses=0xff
+attiny85.upload.maximum_size=8192
+attiny85.build.mcu=attiny85
+attiny85.build.f_cpu=1000000L
+attiny85.build.core=arduino:arduino
+attiny85.build.variant=tiny8

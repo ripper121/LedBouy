@@ -7646,8 +7646,9 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <part name="R2" library="resistor" deviceset="R-EU_" device="M2012" value="68"/>
 <part name="R1" library="resistor" deviceset="R-EU_" device="M2012" value="68"/>
 <part name="LDR1" library="rcl" deviceset="R-EU_" device="V526-0" value="LDR"/>
-<part name="J1" library="con-garry" deviceset="332-02" device=""/>
-<part name="J2" library="con-garry" deviceset="332-02" device=""/>
+<part name="J1" library="con-garry" deviceset="332-02" device="" value="POWER"/>
+<part name="J2" library="con-garry" deviceset="332-02" device="" value="Free"/>
+<part name="J3" library="con-garry" deviceset="332-02" device="" value="SWITCH"/>
 </parts>
 <sheets>
 <sheet>
@@ -7655,7 +7656,7 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="45.72" y="38.1"/>
-<instance part="P+2" gate="VCC" x="22.86" y="55.88"/>
+<instance part="P+2" gate="VCC" x="22.86" y="63.5"/>
 <instance part="GND8" gate="1" x="22.86" y="0"/>
 <instance part="D3" gate="G$1" x="17.78" y="15.24"/>
 <instance part="D2" gate="G$1" x="12.7" y="15.24"/>
@@ -7664,10 +7665,12 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <instance part="R2" gate="G$1" x="12.7" y="25.4" rot="R90"/>
 <instance part="R1" gate="G$1" x="7.62" y="25.4" rot="R90"/>
 <instance part="LDR1" gate="G$1" x="2.54" y="25.4" rot="R90"/>
-<instance part="J1" gate="-1" x="17.78" y="50.8" rot="R180"/>
+<instance part="J1" gate="-1" x="10.16" y="50.8" rot="R180"/>
 <instance part="J1" gate="-2" x="27.94" y="5.08"/>
 <instance part="J2" gate="-1" x="27.94" y="7.62"/>
-<instance part="J2" gate="-2" x="17.78" y="45.72" rot="R180"/>
+<instance part="J2" gate="-2" x="10.16" y="45.72" rot="R180"/>
+<instance part="J3" gate="-1" x="15.24" y="55.88" rot="R90"/>
+<instance part="J3" gate="-2" x="17.78" y="55.88" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -7746,10 +7749,11 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <pinref part="IC1" gate="G$1" pin="VCC"/>
 <pinref part="P+2" gate="VCC" pin="VCC"/>
 <wire x1="25.4" y1="50.8" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="50.8" x2="22.86" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="J1" gate="-1" pin="S"/>
-<wire x1="22.86" y1="50.8" x2="20.32" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="50.8" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="50.8" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
 <junction x="22.86" y="50.8"/>
+<wire x1="17.78" y1="53.34" x2="17.78" y2="50.8" width="0.1524" layer="91"/>
+<pinref part="J3" gate="-2" pin="S"/>
 </segment>
 </net>
 <net name="N$13" class="0">
@@ -7772,7 +7776,15 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="PB1/PCINT1/AIN1/OC0B/INT0/MISO"/>
 <pinref part="J2" gate="-2" pin="S"/>
-<wire x1="25.4" y1="45.72" x2="20.32" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="25.4" y1="45.72" x2="12.7" y2="45.72" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="J1" gate="-1" pin="S"/>
+<pinref part="J3" gate="-1" pin="S"/>
+<wire x1="15.24" y1="50.8" x2="15.24" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="50.8" x2="12.7" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

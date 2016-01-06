@@ -7636,7 +7636,7 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 </class>
 </classes>
 <parts>
-<part name="IC1" library="atmel" deviceset="TINY13" device="PU" technology="V-10"/>
+<part name="IC1" library="atmel" deviceset="TINY13" device="PU" technology="V-10" value="AT-TINY85V"/>
 <part name="P+2" library="supply1" deviceset="VCC" device=""/>
 <part name="GND8" library="supply1" deviceset="GND" device=""/>
 <part name="D3" library="SparkFun-LED" deviceset="LED" device="5MM"/>

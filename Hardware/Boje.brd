@@ -2593,7 +2593,7 @@ Covered vias can be set in Masks (Limit).
 </pass>
 </autorouter>
 <elements>
-<element name="IC1" library="atmel" package="DIL08" value="TINY13V-10PU" x="10.00125" y="6.82625" smashed="yes">
+<element name="IC1" library="atmel" package="DIL08" value="AT-TINY85V" x="10.00125" y="6.82625" smashed="yes">
 <attribute name="MF" value="" x="10.00125" y="6.82625" size="1.778" layer="27" display="off"/>
 <attribute name="OC_FARNELL" value="9171576" x="10.00125" y="6.82625" size="1.778" layer="27" display="off"/>
 <attribute name="MPN" value="ATTINY13V-10PU" x="10.00125" y="6.82625" size="1.778" layer="27" display="off"/>

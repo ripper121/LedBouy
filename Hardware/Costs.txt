@@ -1,0 +1,10 @@
+PCB+BOM
+2,3084€
+Batterie
+4,395€
+Charger
+2,23€
+Enclosure
+0,137€
+
+~10€

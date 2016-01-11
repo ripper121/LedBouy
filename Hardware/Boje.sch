@@ -7626,71 +7626,6 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="smd-special">
-<description>&lt;b&gt;Special SMD Packages&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="SMS-001">
-<description>&lt;b&gt;DIP SWITCH&lt;/b&gt;</description>
-<wire x1="-1.905" y1="-3.2004" x2="1.905" y2="-3.2004" width="0.1524" layer="21"/>
-<wire x1="1.905" y1="3.2004" x2="1.905" y2="-3.2004" width="0.1524" layer="21"/>
-<wire x1="1.905" y1="3.2004" x2="-1.905" y2="3.2004" width="0.1524" layer="21"/>
-<wire x1="-1.905" y1="-3.2004" x2="-1.905" y2="3.2004" width="0.1524" layer="21"/>
-<wire x1="-0.762" y1="2.032" x2="0.762" y2="2.032" width="0.1524" layer="21"/>
-<wire x1="0.762" y1="-2.032" x2="-0.762" y2="-2.032" width="0.1524" layer="21"/>
-<wire x1="0.762" y1="2.032" x2="0.762" y2="-2.032" width="0.1524" layer="21"/>
-<wire x1="-0.762" y1="-2.032" x2="-0.762" y2="2.032" width="0.1524" layer="21"/>
-<smd name="1" x="0" y="-4.318" dx="1.0922" dy="2.54" layer="1"/>
-<smd name="2" x="0" y="4.318" dx="1.0922" dy="2.54" layer="1"/>
-<text x="-0.127" y="-1.27" size="1.016" layer="21">1</text>
-<text x="-2.286" y="-3.175" size="1.27" layer="25" ratio="10" rot="R90">&gt;NAME</text>
-<text x="3.556" y="-3.175" size="1.27" layer="27" ratio="10" rot="R90">&gt;VALUE</text>
-<rectangle x1="-0.762" y1="0.508" x2="0.762" y2="2.032" layer="21"/>
-<rectangle x1="-0.7366" y1="-4.1148" x2="0.762" y2="-3.2004" layer="51"/>
-<rectangle x1="-0.3048" y1="-5.1816" x2="0.3048" y2="-4.1148" layer="51"/>
-<rectangle x1="-0.762" y1="3.2004" x2="0.7366" y2="4.1148" layer="51"/>
-<rectangle x1="-0.3048" y1="4.1148" x2="0.3048" y2="5.1816" layer="51"/>
-</package>
-</packages>
-<symbols>
-<symbol name="DIP01">
-<wire x1="0.508" y1="0" x2="-0.508" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.508" y1="2.54" x2="0.508" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="0.508" y1="2.54" x2="0.508" y2="0" width="0.1524" layer="94"/>
-<wire x1="-0.508" y1="0" x2="-0.508" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="1.905" y1="5.08" x2="-1.905" y2="5.08" width="0.4064" layer="94"/>
-<wire x1="-1.905" y1="5.08" x2="-1.905" y2="-2.54" width="0.4064" layer="94"/>
-<wire x1="-1.905" y1="-2.54" x2="1.905" y2="-2.54" width="0.4064" layer="94"/>
-<wire x1="1.905" y1="-2.54" x2="1.905" y2="5.08" width="0.4064" layer="94"/>
-<text x="-2.54" y="-2.54" size="1.778" layer="95" rot="R90">&gt;NAME</text>
-<text x="4.445" y="-2.54" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-<text x="-0.635" y="3.175" size="0.9906" layer="94" ratio="14">ON</text>
-<text x="-0.254" y="-1.651" size="0.9906" layer="94" ratio="14">1</text>
-<rectangle x1="-0.254" y1="0.254" x2="0.254" y2="1.27" layer="94"/>
-<pin name="2" x="0" y="7.62" visible="pad" length="short" direction="pas" rot="R270"/>
-<pin name="1" x="0" y="-5.08" visible="pad" length="short" direction="pas" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="SWS001" prefix="S">
-<description>&lt;b&gt;SMD Dip Switch 1 pol.&lt;/b&gt;</description>
-<gates>
-<gate name="G$1" symbol="DIP01" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SMS-001">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -7714,7 +7649,7 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <part name="LDR1" library="rcl" deviceset="R-EU_" device="V526-0" value="LDR"/>
 <part name="J1" library="con-garry" deviceset="332-02" device="" value="POWER"/>
 <part name="J2" library="con-garry" deviceset="332-02" device="" value="Free"/>
-<part name="SW1" library="smd-special" deviceset="SWS001" device=""/>
+<part name="J3" library="con-garry" deviceset="332-02" device="" value="SWITCH"/>
 </parts>
 <sheets>
 <sheet>
@@ -7731,11 +7666,12 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <instance part="R2" gate="G$1" x="12.7" y="25.4" rot="R90"/>
 <instance part="R1" gate="G$1" x="7.62" y="25.4" rot="R90"/>
 <instance part="LDR1" gate="G$1" x="2.54" y="25.4" rot="R90"/>
-<instance part="J1" gate="-1" x="2.54" y="50.8" rot="R180"/>
+<instance part="J1" gate="-1" x="7.62" y="53.34" rot="R180"/>
 <instance part="J1" gate="-2" x="27.94" y="5.08"/>
 <instance part="J2" gate="-1" x="27.94" y="7.62"/>
 <instance part="J2" gate="-2" x="10.16" y="45.72" rot="R180"/>
-<instance part="SW1" gate="G$1" x="15.24" y="50.8" rot="R90"/>
+<instance part="J3" gate="-1" x="12.7" y="58.42" rot="R90"/>
+<instance part="J3" gate="-2" x="17.78" y="58.42" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -7814,10 +7750,12 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <pinref part="IC1" gate="G$1" pin="VCC"/>
 <pinref part="P+2" gate="VCC" pin="VCC"/>
 <wire x1="25.4" y1="50.8" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="50.8" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="50.8" x2="20.32" y2="50.8" width="0.1524" layer="91"/>
-<junction x="22.86" y="50.8"/>
-<pinref part="SW1" gate="G$1" pin="1"/>
+<wire x1="22.86" y1="53.34" x2="22.86" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="53.34" x2="22.86" y2="50.8" width="0.1524" layer="91"/>
+<junction x="22.86" y="53.34"/>
+<pinref part="J3" gate="-2" pin="S"/>
+<wire x1="22.86" y1="53.34" x2="17.78" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="53.34" x2="17.78" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$13" class="0">
@@ -7846,8 +7784,9 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <net name="N$1" class="0">
 <segment>
 <pinref part="J1" gate="-1" pin="S"/>
-<wire x1="7.62" y1="50.8" x2="5.08" y2="50.8" width="0.1524" layer="91"/>
-<pinref part="SW1" gate="G$1" pin="2"/>
+<pinref part="J3" gate="-1" pin="S"/>
+<wire x1="10.16" y1="53.34" x2="12.7" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="12.7" y1="53.34" x2="12.7" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

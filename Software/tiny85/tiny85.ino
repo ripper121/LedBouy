@@ -24,8 +24,7 @@ ISR(WDT_vect) {
 }
 
 void setup() {
-  //set timer to 1 sec
-  WDTCR |= (1 << WDP3) | (0 << WDP2) | (0 << WDP1) | (0 << WDP1);
+  WDTCR |= (1<<WDP3) | (0<<WDP2) | (0<<WDP1) | (0<<WDP1);
 
   // Set watchdog timer in interrupt mode
   WDTCR |= (1 << WDIE);
@@ -38,7 +37,7 @@ void setup() {
 
 void loop() {
   power_off();
-  if (power_count > 2) {
+  if (power_count > 0) {
     power_count = 0;
     pinMode(PB1, OUTPUT);
     digitalWrite(PB1, HIGH);

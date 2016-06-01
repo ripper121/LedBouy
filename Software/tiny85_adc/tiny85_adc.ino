@@ -20,19 +20,20 @@
 //WDTCR |= (1<<WDP3) | (0<<WDP2) | (0<<WDP1) | (0<<WDP1);
 #include <avr/interrupt.h>
 #include <avr/sleep.h>
-byte power_counter = 0;
-byte adc_counter = 0;
+#define DARKVAL 40
+#define DEVIATION 5
+#define HYST 6
+byte power_counter = 1;
 float adc_in = 1024;
 float adc_in_pref = 1024;
 float adc_dev = 1024;
 
 ISR(WDT_vect) {
-  power_counter++;
-  adc_counter++;
+  power_counter--;
 }
 
 void setup() {
-  WDTCR |= (0<<WDP3) | (1<<WDP2) | (0<<WDP1) | (1<<WDP0);
+  WDTCR |= (0 << WDP3) | (1 << WDP2) | (0 << WDP1) | (1 << WDP0);
   // Set watchdog timer in interrupt mode
   WDTCR |= (1 << WDIE);
   WDTCR |= (0 << WDE);
@@ -43,16 +44,15 @@ void setup() {
 
 void loop() {
   power_off();
-  if (power_counter > 0) {
-    power_counter = 0;
-    adc_in_pref = adc_in;
-    adc_in = read_LDR();
+  adc_in_pref = adc_in;
+  adc_in = read_LDR();
+  if (power_counter < 1) {
+    power_counter = 1;
     if (adc_in > adc_in_pref)
       adc_dev = adc_in - adc_in_pref;
     else
       adc_dev = adc_in_pref - adc_in;
-
-    if (adc_dev > 5 && adc_in > 40) { //Higher Value = Darker
+    if (adc_dev > DEVIATION && adc_in > DARKVAL) { //Higher Value = Darker
       pinMode(PB0, OUTPUT);
       pinMode(PB1, OUTPUT);
       pinMode(PB4, OUTPUT);
@@ -62,13 +62,14 @@ void loop() {
         digitalWrite(PB4, !digitalRead(PB0));
         delay(100);
       }
+      power_counter = HYST;
     }
   }
 }
 
 int read_LDR()
 {
-  #define SAMPLES 3
+#define SAMPLES 3
   int adc_val = 0;
   //enable pullup on ADC Pin
   pinMode(PB2, INPUT);

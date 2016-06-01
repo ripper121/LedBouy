@@ -24,86 +24,75 @@
 #define DEVIATION 5
 #define HYST 6
 byte power_counter = 1;
-float adc_in = 1024;
-float adc_in_pref = 1024;
-float adc_dev = 1024;
+int adc_in = 1023;
+int adc_in_pref = 1023;
+int adc_dev = 1023;
 
 ISR(WDT_vect) {
   power_counter--;
 }
 
 void setup() {
+  // set timer to 0.5s
   WDTCR |= (0 << WDP3) | (1 << WDP2) | (0 << WDP1) | (1 << WDP0);
   // Set watchdog timer in interrupt mode
   WDTCR |= (1 << WDIE);
   WDTCR |= (0 << WDE);
-  sei(); // Enable global interrupts
+  // Enable global interrupts
+  sei();
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 }
 
-
 void loop() {
-  power_off();
+  //-----POWER OFF START-----
+  //PortB Input LOW
+  DDRB = 0x00;
+  PORTB = 0x00;
+  //Turn off ADC
+  ADCSRA &= ~(1 << ADEN);
+  //Disable analog comparator
+  ACSR |= _BV(ACD);
+  //Go Sleep
+  sleep_mode();
+  //-----POWER OFF END  -----
+
+  //-----READ ADC START-----
+  //Save old value
   adc_in_pref = adc_in;
-  adc_in = read_LDR();
-  if (power_counter < 1) {
+  //PB2 Input Pullup
+  DDRB &= ~(1 << DDB2);
+  PORTB |= (1 << PB2);
+  // Set the ADC input to PB2/ADC1
+  ADMUX |= (1 << MUX0);
+  ADMUX |= (1 << ADLAR);
+  // Set the prescaler to clock/128 & enable ADC
+  ADCSRA |= (1 << ADPS1) | (1 << ADPS0) | (1 << ADEN);
+  // Start the conversion
+  ADCSRA |= (1 << ADSC);
+  // Wait for it to finish
+  while (ADCSRA & (1 << ADSC));
+  adc_in = ADCH;
+  //-----READ ADC END  -----
+
+  if (power_counter < 1 | power_counter > HYST) {
     power_counter = 1;
+    //Get DEVIATION
     if (adc_in > adc_in_pref)
       adc_dev = adc_in - adc_in_pref;
     else
       adc_dev = adc_in_pref - adc_in;
-    if (adc_dev > DEVIATION && adc_in > DARKVAL) { //Higher Value = Darker
-      pinMode(PB0, OUTPUT);
-      pinMode(PB1, OUTPUT);
-      pinMode(PB4, OUTPUT);
+    //Check DEVIATION and DARKVAL
+    if (adc_dev > DEVIATION && adc_in > DARKVAL) {
+      DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB4);
       for (byte i = 0; i < 10; i++) {
-        digitalWrite(PB0, !digitalRead(PB0));
-        digitalWrite(PB1, !digitalRead(PB0));
-        digitalWrite(PB4, !digitalRead(PB0));
-        delay(100);
+        PORTB ^= (1 << PB0) | (1 << PB1) | (1 << PB4);
+        _delay_ms(100);
       }
       power_counter = HYST;
     }
   }
 }
 
-int read_LDR()
-{
-#define SAMPLES 3
-  int adc_val = 0;
-  //enable pullup on ADC Pin
-  pinMode(PB2, INPUT);
-  digitalWrite(PB2, HIGH);
-  // Set the ADC input to PB2/ADC1
-  ADMUX |= (1 << MUX0);
-  ADMUX |= (1 << ADLAR);
-  // Set the prescaler to clock/128 & enable ADC
-  ADCSRA |= (1 << ADPS1) | (1 << ADPS0) | (1 << ADEN);
-  for (byte i = 0; i < SAMPLES; i++) {
-    // Start the conversion
-    ADCSRA |= (1 << ADSC);
-    // Wait for it to finish
-    while (ADCSRA & (1 << ADSC));
-    adc_val += ADCH;
-  }
-  return adc_val / SAMPLES;
-}
-
-void power_off() {
-  pinMode(PB0, INPUT);
-  pinMode(PB1, INPUT);
-  pinMode(PB2, INPUT);
-  pinMode(PB3, INPUT);
-  pinMode(PB4, INPUT);
-  digitalWrite(PB0, LOW);
-  digitalWrite(PB1, LOW);
-  digitalWrite(PB2, LOW);
-  digitalWrite(PB3, LOW);
-  digitalWrite(PB4, LOW);
-  ADCSRA &= ~(1 << ADEN);   //Turn off ADC
-  ACSR |= _BV(ACD);         //Disable analog comparator
-  sleep_mode();             //Go Sleep
-}
 
 
 

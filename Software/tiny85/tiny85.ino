@@ -20,14 +20,13 @@
 #include <avr/power.h>
 #include <avr/sleep.h>
 #include <Vcc.h>
-byte power_count = 0;
 const float VccMin   = 2.0;           // Minimum expected Vcc level, in Volts.
 const float VccMax   = 3.0;           // Maximum expected Vcc level, in Volts.
 const float VccCorrection = 1.0 / 1.0; // Measured Vcc by multimeter divided by reported Vcc
 Vcc vcc(VccCorrection);
 
 ISR(WDT_vect) {
-  power_count++;
+
 }
 
 void setup() {
@@ -42,7 +41,8 @@ void setup() {
     _delay_ms(250);
   }
   // set timer to 8s
-  WDTCR |= (1 << WDP3) | (0 << WDP2) | (0 << WDP1) | (1 << WDP0) | (1 << WDIE) | (0 << WDE);
+  WDTCR |= (1 << WDP3) | (0 << WDP2) | (0 << WDP1) | (0 << WDP0) | (1 << WDIE) | (0 << WDE);
+  sei();
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);
 }
 
@@ -58,12 +58,15 @@ void loop() {
   power_all_disable();
   sleep_mode();
   //-----POWER OFF END  -----
-  if (power_count > 0) {
-    power_count = 0;
-    DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB4);
-    PORTB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB4);
-    _delay_ms(100);
-  }
+  DDRB |= (1 << DDB0) | (1 << DDB1) | (1 << DDB4);
+  PORTB |= (1 << DDB0) ;
+  _delay_ms(250);
+  PORTB = 0x00;
+  PORTB |= (1 << DDB1) ;
+  _delay_ms(250);
+  PORTB = 0x00;
+  PORTB |= (1 << DDB4);
+  _delay_ms(250);
 }
 
 
